@@ -54,6 +54,15 @@ export default OAuth2PasswordGrant.extend({
      */
     serverTokenEndpoint: ENV.api.host + '/api/v' + ENV.api.version + "/token",
 
+    /**
+     * The session service which is offered by ember-simple-auth that will be used
+     * in order to verify whether the used is authenticated
+     *
+     * @property session
+     * @type Ember.Service
+     * @for OAuth2PasswordGrant
+     * @public
+     */
     session: inject(),
 
     /**

@@ -28,9 +28,24 @@ export default Route.extend({
      * @for Application
      * @public
      */
-    session:inject(),
-    
+    session: inject(),
+
     beforeModel() {
         this.session.prohibitAuthentication(this.routeIfAlreadyAuthenticated);
+        this.notifySessionExpired();
+    },
+    /**
+     * This function notifies the user when their session has expired.
+     */
+    notifySessionExpired() {
+        let sessionExpired = localStorage.getItem('sessionExpired');
+        if (sessionExpired) {
+            new Messenger().post({
+                message: "Your session has expired. Please log in again to continue",
+                type: 'error',
+                showCloseButton: true
+            });
+            localStorage.removeItem('sessionExpired');
+        }
     }
 });
