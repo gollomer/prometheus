@@ -90,7 +90,7 @@ export default class SignInController extends Controller {
                     let oldRequestedUrl = _self.session.oldRequestedUrl;
                     //if requested url is present then route to that url otherwise route user to /app
                     let urlToRoute = (oldRequestedUrl && oldRequestedUrl != '/') ? oldRequestedUrl : 'app';
-                    
+
                     _self.session.handleAuthentication(urlToRoute);
                 }
             },
@@ -102,5 +102,33 @@ export default class SignInController extends Controller {
                 });
             }
         );
+    }
+
+    /**
+     * This property returns the boolean value to set the "Remember me" checkbox.
+     * 
+     * @property rememberMe
+     * @type Boolean
+     * @for Signin
+     */
+    get rememberMe() {
+        let rememberMe = localStorage.getItem('remember_me');
+
+        // If rememberMe is null, set remember_me property into localstorage
+        if (rememberMe === null) {
+            localStorage.setItem('remember_me', false);
+        }
+
+        return (localStorage.getItem('remember_me') === 'true') ? true : false;
+    }
+
+    /**
+     * This function is used to set remember me property in local storage.
+     * 
+     * @method setRememberMe
+     * @param {String} value 
+     */
+    @action setRememberMe(value) {
+        localStorage.setItem('remember_me', value.target.checked);
     }
 }
