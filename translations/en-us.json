@@ -282,7 +282,8 @@
       "or": "- OR -",
       "forgot": "I forgot my password",
       "title": "<b>Projects</b>4<b>Me</b>",
-      "error": "Invalid username or password"
+      "error": "Invalid username or password",
+      "sessionExpired": "Your <b>session</b> has expired. Please sign in again to continue"
     },
     "app": {
       "member": "Member since ",
