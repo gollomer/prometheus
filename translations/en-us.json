@@ -282,7 +282,8 @@
       "or": "- OR -",
       "forgot": "I forgot my password",
       "title": "<b>Projects</b>4<b>Me</b>",
-      "error": "Invalid username or password",
+      "invalid_grant": "Invalid username or password",
+      "resourceLocked": "Your account has been locked, please contact the system administrator",
       "sessionExpired": "Your <b>session</b> has expired. Please sign in again to continue"
     },
     "app": {
