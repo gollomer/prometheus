@@ -43,6 +43,12 @@
     {{!-- /.social-auth-links --}}
 
     <a href="#">{{t "views.signin.forgot"}}</a><br>
+
+    <AppUi::Language
+      @placeholder={{t "views.app.user.create.languageplaceholder"}}
+      @value={{this.preferredLanguage}}
+      @onchange={{this.updateLanguage}}
+    />
   </div>
   {{!-- /.login-box-body --}}
 </div>
