@@ -44,11 +44,15 @@
 
     <a href="#">{{t "views.signin.forgot"}}</a><br>
 
-    <AppUi::Language
-      @placeholder={{t "views.app.user.create.languageplaceholder"}}
-      @value={{this.preferredLanguage}}
-      @onchange={{this.updateLanguage}}
-    />
+    <div class="row">
+      <div class="col-md-4 col-xs-12">
+        <AppUi::Language
+          @placeholder={{t "views.app.user.create.languageplaceholder"}}
+          @value={{this.preferredLanguage}}
+          @onchange={{this.updateLanguage}}
+        />
+      </div>
+    </div>
   </div>
   {{!-- /.login-box-body --}}
 </div>
