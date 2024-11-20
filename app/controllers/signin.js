@@ -70,6 +70,16 @@ export default class SignInController extends Controller {
     @tracked errorMessage = "";
 
     /**
+     * This property is used to store user's preferred language.
+     * 
+     * @property preferredLanguage
+     * @type String
+     * @for Signin
+     * @public
+     */
+    @tracked preferredLanguage = "en";
+
+    /**
      * This function invalidates the session which effectively logs the user out
      * of the application and if user is authenticated then we'll route user to
      * "app" route
@@ -130,5 +140,14 @@ export default class SignInController extends Controller {
      */
     @action setRememberMe(value) {
         localStorage.setItem('remember_me', value.target.checked);
+    }
+
+    /**
+     * Update the language of the application according to user's preference.
+     * 
+     * @param {Object} language 
+     */
+    @action updateLanguage(language) {
+        this.preferredLanguage = language.value;
     }
 }
