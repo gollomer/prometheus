@@ -2,27 +2,28 @@
  * Projects4Me Copyright (c) 2017. Licensing : http://legal.projects4.me/LICENSE.txt. Do not remove this line
  */
 
-import Controller from '@ember/controller';
+import PrometheusCreateController from "prometheus/controllers/prometheus/create";
 import { service } from '@ember/service';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import ENV from "prometheus/config/environment";
 
 /**
  * This the signin controller.
  *
- * @class Signin
+ * @class SigninController
  * @namespace Prometheus.Controller
  * @extends Ember.Controller
  * @author Hammad Hassan gollmer@gmail.com
  */
-export default class SignInController extends Controller {
+export default class SignInController extends PrometheusCreateController {
 
     /**
      * The intl library service that is used in order to get the translations
      *
      * @property intl
      * @type Ember.Service
-     * @for Prometheus.Controllers.Prometheus
+     * @for SigninController
      * @public
      */
     @service('intl') intl;
@@ -33,17 +34,37 @@ export default class SignInController extends Controller {
      *
      * @property session
      * @type Object
-     * @for Signin
+     * @for SigninController
      * @public
      */
     @service('session') session;
+
+    /**
+     * This property is used to toggle the forget password form.
+     * 
+     * @property forgetPassword
+     * @type Boolean
+     * @for SigninController
+     * @public
+     */
+    @tracked forgetPassword = false;
+
+    /**
+     * This property is used to store user's email.
+     * 
+     * @property email
+     * @type String
+     * @for SigninController
+     * @public
+     */
+    @tracked email = '';
 
     /**
      * This property is used to store user's name.
      *
      * @property username
      * @type String
-     * @for Signin
+     * @for SigninController
      * @public
      */
     @tracked username = "";
@@ -53,7 +74,7 @@ export default class SignInController extends Controller {
      *
      * @property password
      * @type String
-     * @for Signin
+     * @for SigninController
      * @public
      */
     @tracked password = "";
@@ -64,7 +85,7 @@ export default class SignInController extends Controller {
      *
      * @property errorMessage
      * @type String
-     * @for Signin
+     * @for SigninController
      * @public
      */
     @tracked errorMessage = "";
@@ -74,10 +95,69 @@ export default class SignInController extends Controller {
      * 
      * @property preferredLanguage
      * @type String
-     * @for Signin
+     * @for SigninController
      * @public
      */
     @tracked preferredLanguage = "en";
+
+    /**
+     * Template's metadata for signin controller.
+     * 
+     * This object holds all of the information that we need to create our schema and also need to 
+     * render the template (in future).
+     * @property metadata
+     * @type Object
+     * @for SigninController
+     * @protected
+     */
+    metadata = {
+        sections: [
+            {
+                name: "forgetPasswordSection",
+                fields: [
+                    {
+                        name: "email",
+                        component: "FormFields::FieldText",
+                        placeholder: "views.app.user.create.emailplaceholder",
+                        label: "views.app.user.create.email",
+                        type: "text",
+                        value: "value",
+                        lengthRequired: true,
+                        modifiers: [],
+                        dataAttributes: [],
+                        actions: [],
+                        events: [],
+                        validations: {
+                            default: {
+                                type: "string",
+                                rules: [
+                                    {
+                                        name: "required"
+                                    },
+                                    {
+                                        name: "email"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+
+    /**
+     * This function is called on the initialization of the controller. In this function
+     * we're calling setupSchema method in order to generate schema, by analyzing metadata
+     * defined in the controller, that will be used to validate the form of the template.
+     *
+     * @method constructor
+     * @public
+     */
+    constructor() {
+        super(...arguments);
+        this.setupSchema();
+    }
 
     /**
      * This function invalidates the session which effectively logs the user out
@@ -119,7 +199,7 @@ export default class SignInController extends Controller {
      * 
      * @property rememberMe
      * @type Boolean
-     * @for Signin
+     * @for SigninController
      */
     get rememberMe() {
         let rememberMe = localStorage.getItem('remember_me');
@@ -145,9 +225,70 @@ export default class SignInController extends Controller {
     /**
      * Update the language of the application according to user's preference.
      * 
+     * @method updateLanguage
      * @param {Object} language 
      */
     @action updateLanguage(language) {
         this.preferredLanguage = language.value;
+    }
+
+    /**
+     * This function toggles the forget password form.
+     * 
+     * @method toggleForgetPassword
+     */
+    @action toggleForgetPassword() {
+        this.forgetPassword = !this.forgetPassword;
+    }
+
+    /**
+     * This function sends the password reset link to user's email.
+     * 
+     * @method sendPasswordResetLink
+     */
+    @action sendPasswordResetLink() {
+        const email = this.email;
+        let _self = this;
+        let emailModel = {
+            email: email
+        }
+
+        this.validate(emailModel, 'forgetPasswordSection').then((validation) => {
+            if (validation.isValid) {
+                fetch(`${ENV.api.host}/api/v${ENV.api.version}/forgetpassword`, {
+                    method: 'POST',
+                    body: JSON.stringify({ email }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            new Messenger().post({
+                                message: _self.intl.t(`views.signin.forgetPassword.success`),
+                                type: 'success',
+                                showCloseButton: true
+                            });
+                        } else {
+                            new Messenger().post({
+                                message: _self.intl.t(`views.signin.forgetPassword.error`),
+                                type: 'error',
+                                showCloseButton: true
+                            });
+                            console.error('Failed to send password reset link');
+                        }
+                    })
+                    .catch(error => {
+                        new Messenger().post({
+                            message: _self.intl.t(`views.signin.forgetPassword.error`),
+                            type: 'error',
+                            showCloseButton: true
+                        });
+                        console.error('An error occurred while sending the password reset link:', error);
+                    });
+            } else {
+                this._showError(validation.errors, 'user');
+            }
+        });
     }
 }
