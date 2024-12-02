@@ -269,6 +269,7 @@ export default class SignInController extends PrometheusCreateController {
                                 type: 'success',
                                 showCloseButton: true
                             });
+                            this.toggleForgetPassword();
                         } else {
                             new Messenger().post({
                                 message: _self.intl.t(`views.signin.forgetPassword.error`),
