@@ -9,9 +9,41 @@
 */
 
 .login-box {
+
+    [data-toggle-forget-password] {
+        cursor: pointer;
+    }
+
     .login-box-body {
         [data-field="select-language"] {
             margin: 1rem 0;
+        }
+
+        [data-email-address-title] {
+            text-align: center;
+        }
+
+        [data-field="user.email"] {
+            margin: 0 0 3rem 0;
+
+            input {
+                border: 1px solid #ccc;
+            }
+
+            span.bar {
+                display: none;
+            }
+        }
+
+        .text-center {
+            button {
+                width: 100%;
+            }
+
+            [data-back-to-signin] {
+                margin-top: 1rem;
+                background: darkcyan;
+            }
         }
     }
 }
