@@ -81,10 +81,12 @@ export default class PrometheusCreateController extends PrometheusController {
      * the saved page.
      *
      * @method save
+     * @param {string} schemaName The schema name for which we are saving the model.
+     * @param {string} module The module for which we are showing the error. This can be multiple modules in same view/template.
      * @public
      * @todo Handle the situation where we are not using validations
      */
-    @action save(schemaName) {
+    @action save(schemaName, module) {
         let model = this.model;
 
         this.validate(model, schemaName).then((validation) => {
@@ -92,7 +94,7 @@ export default class PrometheusCreateController extends PrometheusController {
                 this.beforeSave(model);
                 this._save(model);
             } else {
-                this._showError(validation.errors);
+                this._showError(validation.errors, module);
             }
         });
     }
@@ -356,12 +358,14 @@ export default class PrometheusCreateController extends PrometheusController {
      *
      * @method showSuccess
      * @param {Error} validationError
+     * @param {string} module The module for which we are showing the error. This can be multiple modules in same view/template.
      * @private
      */
-    _showError(validationError) {
+    _showError(validationError, module) {
         let _self = this;
-        Logger.debug(_self.get('module'));
-        let messages = _self._buildMessages(validationError, _self.get('module'));
+        module = module || _self.get('module');
+        Logger.debug(module);
+        let messages = _self._buildMessages(validationError, module);
 
         new Messenger().post({
             message: messages,

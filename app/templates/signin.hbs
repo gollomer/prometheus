@@ -1,58 +1,103 @@
 <div class="login-box">
-  <div class="login-logo">
-    <a href="#"><img alt="{{t "application"}}" src="/img/app/logo-256.png"><div class="clearfix"></div>{{safe-html (t "views.signin.title")}}</a>
-  </div>
-  {{!-- /.login-logo --}}
-  <div class="login-box-body">
-    {{#if this.errorMessage}}
-      <p class="login-box-msg">{{this.errorMessage}}</p>
-    {{else}}
-      <p class="login-box-msg">{{t "views.signin.message"}}</p>
-    {{/if}}
+  {{#if (not this.forgetPassword)}}
+    <div class="login-logo">
+      <a><img alt="{{t "application"}}" src="/img/app/logo-256.png"><div class="clearfix"></div>{{safe-html (t "views.signin.title")}}</a>
+    </div>
+    {{!-- /.login-logo --}}
+    <div class="login-box-body">
+      {{#if this.errorMessage}}
+        <p class="login-box-msg">{{this.errorMessage}}</p>
+      {{else}}
+        <p class="login-box-msg">{{t "views.signin.message"}}</p>
+      {{/if}}
 
-    <form {{action 'authenticate' on='submit'}} method="post">
-      <div class="form-group has-feedback">
-        <Input id='username' class='form-control' placeholder={{t "views.signin.username"}} @value={{this.username}}/>
-        <span class="glyphicon glyphicon-user form-control-feedback"></span>
-      </div>
-      <div class="form-group has-feedback">
-        <Input id='password' class='form-control' @type='password' placeholder={{t "views.signin.password"}} @value={{this.password}}/>
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-      </div>
-      <div class="row">
-
-        <div class="col-xs-12">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">{{t "global.form.signin"}}</button>
+      <form {{action 'authenticate' on='submit'}} method="post">
+        <div class="form-group has-feedback">
+          <Input id='username' class='form-control' placeholder={{t "views.signin.username"}} @value={{this.username}}/>
+          <span class="glyphicon glyphicon-user form-control-feedback"></span>
         </div>
+        <div class="form-group has-feedback">
+          <Input id='password' class='form-control' @type='password' placeholder={{t "views.signin.password"}} @value={{this.password}}/>
+          <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        <div class="row">
 
-        <div class="col-xs-4 col-xs-offset-4">
-          <div class="checkbox icheck">
-            <input type="checkbox" onchange={{action "setRememberMe"}} checked={{this.rememberMe}}>
-            <label>{{t "views.signin.remember"}}</label>
+          <div class="col-xs-12">
+            <button type="submit" class="btn btn-primary btn-block btn-flat">{{t "global.form.signin"}}</button>
           </div>
+
+          <div class="col-xs-4 col-xs-offset-4">
+            <div class="checkbox icheck">
+              <input type="checkbox" onchange={{action "setRememberMe"}} checked={{this.rememberMe}}>
+              <label>{{t "views.signin.remember"}}</label>
+            </div>
+          </div>
+
         </div>
+      </form>
 
+      <div class="social-auth-links text-center">
+        <p>{{t "views.signin.or"}}</p>
+        <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i>{{t "views.signin.facebook"}}</a>
+        <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i>{{t "views.signin.google"}}</a>
       </div>
-    </form>
+      {{!-- /.social-auth-links --}}
 
-    <div class="social-auth-links text-center">
-      <p>{{t "views.signin.or"}}</p>
-      <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i>{{t "views.signin.facebook"}}</a>
-      <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i>{{t "views.signin.google"}}</a>
+      <a data-toggle-forget-password onclick={{this.toggleForgetPassword}}>{{t "views.signin.forgot"}}</a><br>
+
+      <div class="row">
+        <div class="col-md-4 col-xs-12">
+          <AppUi::Language
+            @placeholder={{t "views.app.user.create.languageplaceholder"}}
+            @value={{this.preferredLanguage}}
+            @onchange={{this.updateLanguage}}
+          />
+      </div>
+      </div>      
     </div>
-    {{!-- /.social-auth-links --}}
+  {{else}}
+    <div class="login-logo">
+      <a data-toggle-forget-password onclick={{action this.toggleForgetPassword}}><img alt="{{t "application"}}" src="/img/forgot-password.png">
+        <div class="clearfix"></div>{{safe-html (t "views.signin.forgetPassword.title")}}
+      </a>
+    </div>
+    <div class="login-box-body">
+      <p data-email-address-title>{{t "views.signin.forgetPassword.message"}}</p>
 
-    <a href="#">{{t "views.signin.forgot"}}</a><br>
+      <FormFields::FieldText
+        @placeholder={{t "views.app.user.create.emailplaceholder" }}
+        @type="text" 
+        @value={{this.email}}
+        @data-field="user.email" 
+        @lengthRequired={{false}}
+        @validate={{action this.validateField "forgetPasswordSection" (hash name="email" value=this.email model=(hash email=this.email))}}
+        @message={{this.message.forgetPasswordSection.email}}        
+        @mask="email"
+      />
 
-    <div class="row">
-      <div class="col-md-4 col-xs-12">
-        <AppUi::Language
-          @placeholder={{t "views.app.user.create.languageplaceholder"}}
-          @value={{this.preferredLanguage}}
-          @onchange={{this.updateLanguage}}
-        />
+      <div class="text-center">
+        <AppUi::Button
+          data-reset-password-btn
+          type="button" 
+          data-btn="save" 
+          class="btn btn-primary" 
+          {{action this.sendPasswordResetLink}}
+        >
+          {{t "views.signin.forgetPassword.sendLink"}}
+        </AppUi::Button>
+
+        <AppUi::Button
+          data-back-to-signin
+          type="button" 
+          data-btn="save" 
+          class="btn btn-primary"
+          {{action this.toggleForgetPassword}} 
+        >
+          <i class="fa fa-angle-left" aria-hidden="true"></i>
+          {{t "views.signin.forgetPassword.backToSignin"}}
+        </AppUi::Button>        
       </div>
     </div>
-  </div>
+  {{/if}}
   {{!-- /.login-box-body --}}
 </div>

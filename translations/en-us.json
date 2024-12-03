@@ -284,7 +284,18 @@
       "title": "<b>Projects</b>4<b>Me</b>",
       "invalid_grant": "Invalid username or password",
       "resourceLocked": "Your account has been locked, please contact the system administrator",
-      "sessionExpired": "Your <b>session</b> has expired. Please sign in again to continue"
+      "error": "Invalid username or password",
+      "sessionExpired": "Your <b>session</b> has expired. Please sign in again to continue",
+      "forgetPassword": {
+        "title": "<b>Forgot Password</b>",
+        "message": "Please enter your email address",
+        "email": "Email Address",
+        "submit": "Submit",
+        "error": "An error occurred while sending the email, please try again",
+        "success": "Reset link has been sent to your email address",
+        "sendLink": "Send Reset Link",
+        "backToSignin": "Back to Sign in"
+      }
     },
     "app": {
       "member": "Member since ",
