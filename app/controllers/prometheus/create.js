@@ -123,7 +123,7 @@ export default class PrometheusCreateController extends PrometheusController {
                 _.set(this.message, `${schemaName}.${actualField.name}`, '');
                 this.message = { ...this.message };
 
-                (dependentField) && (this.validateDependentField(schemaName, actualField, dependentField));
+                (dependentField) && (this.validateDependentField(schemaName, actualField, dependentField, model));
 
             } catch (e) {
                 this.setValidationMessages(e, schemaName, actualField, dependentField);
@@ -141,9 +141,10 @@ export default class PrometheusCreateController extends PrometheusController {
      * @param {String} schemaName 
      * @param {Object} actualField
      * @param {Object} dependentField
+     * @param {Object} model
      * @protected
      */
-    validateDependentField(schemaName, actualField, dependentField) {
+    validateDependentField(schemaName, actualField, dependentField, model) {
         /**
         * Check if validateDependent flag is true and  value of the actual and dependent field are equal, then
         * remove the error message of dependent field.
@@ -158,7 +159,7 @@ export default class PrometheusCreateController extends PrometheusController {
             actualField.name = dependentField.name;
 
             //validate dependent field
-            this[schemaName].validateSyncAt(dependentField.name, this.model);
+            this[schemaName].validateSyncAt(dependentField.name, model);
         }
     }
 

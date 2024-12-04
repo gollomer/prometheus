@@ -59,6 +59,7 @@ Router.map(function() {
     });
   });
   this.route('signin', function() {});
+  this.route('reset-password');
 });
 
 export default Router;
