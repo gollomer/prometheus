@@ -133,6 +133,7 @@ export default class ResetPasswordController extends PrometheusCreateController 
             password: this.password,
             resetToken: token
         }
+        let _self = this;
 
         await fetch(url, {
             method: 'PATCH',
