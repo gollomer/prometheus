@@ -63,6 +63,12 @@ export default Route.extend({
         let route = '';
         let currentUrl = (ENV.environment == 'test') ? this.router.location.path : this.router.location.concreteImplementation.location.pathname;
 
+        // If public route then no need to check for authentication
+        let publicRoutes = ENV.publicRoutes;
+        if (publicRoutes.includes(currentUrl.substring(1))) {
+            return;
+        }
+
         if (this.session.isAuthenticated) {
             route = (currentUrl != '/') ? currentUrl : 'app';
         } else if (!this.session.isAuthenticated) {
