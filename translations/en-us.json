@@ -290,11 +290,19 @@
         "title": "<b>Forgot Password</b>",
         "message": "Please enter your email address",
         "email": "Email Address",
-        "submit": "Submit",
         "error": "An error occurred while sending the email, please try again",
         "success": "Reset link has been sent to your email address",
         "sendLink": "Send Reset Link",
         "backToSignin": "Back to Sign in"
+      },
+      "resetPassword": {
+        "title": "<b>Reset Password</b>",
+        "message": "Please enter your new password",
+        "password": "New Password",
+        "confirm": "Confirm Password",
+        "changePassword": "Change Password",
+        "error": "An error occurred while resetting the password, please try again",
+        "success": "Password has been reset successfully"
       }
     },
     "app": {
