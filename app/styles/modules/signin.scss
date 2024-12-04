@@ -9,7 +9,6 @@
 */
 
 .login-box {
-
     [data-toggle-forget-password] {
         cursor: pointer;
     }
@@ -19,11 +18,11 @@
             margin: 1rem 0;
         }
 
-        [data-email-address-title] {
+        .title {
             text-align: center;
         }
 
-        [data-field="user.email"] {
+        [data-field^="user."] {
             margin: 0 0 3rem 0;
 
             input {
