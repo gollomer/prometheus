@@ -3,6 +3,7 @@
  */
 
 import Service from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 /**
  * This is a service that provides id of selected project. This service can be injected
@@ -18,12 +19,12 @@ export default class TrackedProjectService extends Service {
     /**
      * Id of selected project
      *
-     * @property projectId
+     * @property id
      * @type String
      * @for TrackedProject
-     * @private
+     * @public
      */
-    // projectId = null;
+    @tracked id = this.getProjectId();
 
     /**
      * This function returns projectId
@@ -32,8 +33,10 @@ export default class TrackedProjectService extends Service {
      * @public
      */
     getProjectId() {
-        // return this.projectId;
-        return sessionStorage.getItem('projectId');
+        let projectId = sessionStorage.getItem('projectId');
+        if (projectId) {
+            return projectId;
+        }
     }
 
     /**
@@ -43,7 +46,7 @@ export default class TrackedProjectService extends Service {
      * @public
      */
     setProjectId(projectId) {
-        //this.set('projectId',projectId);
-        sessionStorage.setItem('projectId',projectId);
+        this.set('id', projectId);
+        sessionStorage.setItem('projectId', projectId);
     }
 }
