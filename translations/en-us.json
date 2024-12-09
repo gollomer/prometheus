@@ -327,6 +327,7 @@
       "createIssue": "Create Issue",
       "createProject": "Create Project",
       "createConversation": "Create Conversation",
+      "selectProject": "Please select a project first",
       "project": {
         "label": "Project",
         "noproject": "No project selected",
@@ -1031,8 +1032,8 @@
                 "system": "System"
               },
               "created": {
-                "system" : "Membership created for system",
-                "project" : "Membership created for project <strong>{name}</strong>"
+                "system": "Membership created for system",
+                "project": "Membership created for project <strong>{name}</strong>"
               }
             },
             "createMembership": "Create Membership",
@@ -1131,7 +1132,7 @@
         "conversation": {
           "label": "Conversations"
         },
-        "user":{
+        "user": {
           "label": "Users",
           "create": "Create User",
           "management": "User Management"

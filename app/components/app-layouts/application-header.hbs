@@ -28,22 +28,20 @@
     <div class="btn-group create-modules" data-project-id={{this.trackedProject.id}}>
 
       {{!-- Create Project --}}
-      <LinkTo @route="app.projects.create">
-        <AppUi::Button type="button" class="btn btn-default btn-sm"><i class="fa fa-briefcase"></i> <span>{{t "views.app.createProject"}}</span>
-        </AppUi::Button>
-      </LinkTo>
+      
+      <AppUi::Button type="button" class="btn btn-default btn-sm" {{action this.routeToModule 'project' 'app.projects.create'}}>
+        <i class="fa fa-briefcase"></i> <span>{{t "views.app.createProject"}}</span>
+      </AppUi::Button>
 
       {{!-- Create Issue --}}
-      <LinkTo @route="app.project.issue.create" @model={{this.trackedProject.id}} disabled={{if (not this.trackedProject.id) 'true'}}>
-        <AppUi::Button type="button" class="btn btn-default btn-sm"><i class="fa fa-tasks"></i> <span>{{t "views.app.createIssue"}}</span>
-        </AppUi::Button>
-      </LinkTo>
+      <AppUi::Button type="button" class="btn btn-default btn-sm" {{action this.routeToModule 'issue' 'app.project.issue.create' this.trackedProject.id true}}>
+        <i class="fa fa-tasks"></i> <span>{{t "views.app.createIssue"}}</span>
+      </AppUi::Button>
 
       {{!-- Create Conversation --}}
-      <LinkTo @route="app.project.conversation" @model={{this.trackedProject.id}} disabled={{if (not this.trackedProject.id) 'true'}}>
-        <AppUi::Button type="button" class="btn btn-default btn-sm"><i class="fa fa-comments"></i> <span>{{t "views.app.createConversation"}}</span>
-        </AppUi::Button>
-      </LinkTo>
+      <AppUi::Button type="button" class="btn btn-default btn-sm" {{action this.routeToModule 'conversation' 'app.project.conversation' this.trackedProject.id true}}>
+        <i class="fa fa-comments"></i> <span>{{t "views.app.createConversation"}}</span>
+      </AppUi::Button>
     </div>
     {{!-- Create Modules e.g. Project,Issue,Conversation (END) --}}
 
