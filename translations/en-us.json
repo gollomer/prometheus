@@ -328,6 +328,8 @@
       "createProject": "Create Project",
       "createConversation": "Create Conversation",
       "selectProject": "Please select a project first",
+      "createNewProjectDescription": "No projects are found, please create one by clicking on the button below",
+      "contactAdminForProject": "No projects are found, to create one please contact administrator",
       "project": {
         "label": "Project",
         "noproject": "No project selected",
