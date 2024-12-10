@@ -46,7 +46,7 @@ export default class TrackedProjectService extends Service {
      * @public
      */
     setProjectId(projectId) {
-        this.set('id', projectId);
+        this.id = projectId;
         sessionStorage.setItem('projectId', projectId);
     }
 }
