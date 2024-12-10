@@ -8,7 +8,7 @@ import format from "prometheus/utils/data/format";
 import { task, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
 import AppComponent from '../app';
-import {tracked} from'@glimmer/tracking';
+import { tracked } from '@glimmer/tracking';
 
 /**
  * This component is used to render the application header
@@ -39,7 +39,7 @@ export default class ApplicationHeaderComponent extends AppComponent {
      * @private
      */
     @tracked selected;
-    
+
     /**
      * We are using the store service to retrieve data for global search
      *
@@ -186,4 +186,28 @@ export default class ApplicationHeaderComponent extends AppComponent {
 
     }
 
+    /**
+     * This function is used to route to a given module by providing the proper context to the route. If context is required by the route
+     * and projectId is not provided, it will show an error message.
+     * 
+     * @param {String} moduleName 
+     * @param {String} projectId 
+     * @param {Boolean} contextRequired 
+     */
+    @action routeToModule(moduleName, routePath, projectId, contextRequired = false) {
+        let _self = this;
+
+        if (contextRequired && projectId) {
+            this.router.transitionTo(routePath, { project_id: projectId });
+        }
+        else if (!contextRequired) {
+            this.router.transitionTo(routePath);
+        } else {
+            new Messenger().post({
+                message: _self.intl.t(`views.app.selectProject`),
+                type: 'error',
+                showCloseButton: true
+            });
+        }
+    }
 }

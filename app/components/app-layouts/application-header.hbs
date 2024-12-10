@@ -15,14 +15,36 @@
   </a>
   <div class="global-search">
 
-<PowerSelect
-  @placeholder={{t "global.form.searchPlaceholder"}}
-  @searchEnabled={{true}}
-  @search={{perform this.search}}
-  @onChange={{this.itemSelected}} as |issue|>
-  <i class="fa fa-tasks"></i> <strong>#{{issue.number}}</strong> - {{issue.name}}
-</PowerSelect>
+    <PowerSelect
+      @placeholder={{t "global.form.searchPlaceholder"}}
+      @searchEnabled={{true}}
+      @search={{perform this.search}}
+      @onChange={{this.itemSelected}} as |issue|>
+      <i class="fa fa-tasks"></i> <strong>#{{issue.number}}</strong> - {{issue.name}}
+    </PowerSelect> 
   </div>
+
+    {{!-- Create Modules e.g. Project,Issue,Conversation (START) --}}
+    <div class="btn-group create-modules" data-project-id={{this.trackedProject.id}}>
+
+      {{!-- Create Project --}}
+      
+      <AppUi::Button type="button" class="btn btn-default btn-sm" {{action this.routeToModule 'project' 'app.projects.create'}} @aclContext="App.Project.Create">
+        <i class="fa fa-briefcase"></i> <span>{{t "views.app.createProject"}}</span>
+      </AppUi::Button>
+
+      {{!-- Create Issue --}}
+      <AppUi::Button type="button" class="btn btn-default btn-sm" {{action this.routeToModule 'issue' 'app.project.issue.create' this.trackedProject.id true}} @aclContext="App.Project.Issue.Create">
+        <i class="fa fa-tasks"></i> <span>{{t "views.app.createIssue"}}</span>
+      </AppUi::Button>
+
+      {{!-- Create Conversation --}}
+      <AppUi::Button type="button" class="btn btn-default btn-sm" {{action this.routeToModule 'conversation' 'app.project.conversation' this.trackedProject.id true}} @aclContext="App.Project.Conversation.Create">
+        <i class="fa fa-comments"></i> <span>{{t "views.app.createConversation"}}</span>
+      </AppUi::Button>
+    </div>
+    {{!-- Create Modules e.g. Project,Issue,Conversation (END) --}}
+
   {{!-- Navbar Right Menu --}}
   <div class="navbar-custom-menu">
     <ul class="nav navbar-nav">
