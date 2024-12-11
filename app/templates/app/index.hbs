@@ -13,14 +13,14 @@
 
     {{else}}
       <div class="col-md-12 text-center">
-        <img class="img-responsive" src="/img/app/logo-256.png" alt="Projects4me">
-        <h1>Welcome to <b>Projects</b>4<b>Me</b></h1>
+        <img class="img-responsive" src="/img/app/logo-256.png" alt={{t "application"}}>
+        <h1>{{safe-html (t "views.app.welcome")}}</h1>
 
         <AccessControl @aclContext="App.Project.Create">
           <:default>
             <p>{{t 'views.app.createNewProjectDescription'}}</p>
             <LinkTo @route="app.projects.create">
-              <AppUi::Button type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Create Project</AppUi::Button>
+              <AppUi::Button type="button" class="btn btn-primary"><i class="fa fa-plus"></i> {{t "views.app.createProject"}}</AppUi::Button>
             </LinkTo>
           </:default>
           
