@@ -6,6 +6,7 @@ import PrometheusController from "prometheus/controllers/prometheus";
 import format from "../utils/data/format";
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { service } from '@ember/service';
 
 /**
  * This the app controller. App is as the main route for the application's
@@ -49,6 +50,17 @@ export default class AppController extends PrometheusController {
     @tracked chatrooms = [];
 
     /**
+     * This service holds current authenticated user permissions on different resources of
+     * the application.
+     *
+     * @property acl
+     * @type Ember.Service
+     * @for AppController
+     */
+    @service acl;
+
+
+    /**
      * This is the list of roles that has been extracted
      *
      * @property rolesList
@@ -84,7 +96,7 @@ export default class AppController extends PrometheusController {
     get projectsList() {
         Logger.debug(this.projects);
         return (new format(this)).getSelectList(this.projects);
-    }    
+    }
 
     /**
      * This function invalidates the session which effectively logs the user out
