@@ -8,13 +8,17 @@ export const given = function () {
             "$userName selects Project $projectId": (assert, ctx) => async function (userName, projectId) {
                 let project = server.create('project');
                 let oldProjectId = project.id;
-                let users = server.schema.users.all().models;
+                let users = server.schema.users.all();
                 if (projectId !== '1') {
                     project.update({
                         id: projectId,
                         members: users
                     });
                     server.db.projects.remove(oldProjectId);
+                } else {
+                    project.update({
+                        members: users
+                    });
                 }
                 ctx.set('currentProject', project);
                 assert.equal(project.id, projectId);
