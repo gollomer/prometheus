@@ -81,7 +81,7 @@
           type="button" 
           data-btn="save" 
           class="btn btn-primary" 
-          {{action this.sendPasswordResetLink}}
+          @onClick={{this.sendPasswordResetLink}}
         >
           {{t "views.signin.forgetPassword.sendLink"}}
         </AppUi::Button>
@@ -91,7 +91,7 @@
           type="button" 
           data-btn="save" 
           class="btn btn-primary"
-          {{action this.toggleForgetPassword}} 
+          @onClick={{this.toggleForgetPassword}} 
         >
           <i class="fa fa-angle-left" aria-hidden="true"></i>
           {{t "views.signin.forgetPassword.backToSignin"}}

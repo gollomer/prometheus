@@ -63,7 +63,7 @@
             @value={{this.userSearchQuery}}
           />
 
-          <AppUi::Button data-btn="create-membership" type="button" class="btn btn-primary" {{action this.showAddMembershipDialog}} @aclContext="App.Role.User.Membership.Create">
+          <AppUi::Button data-btn="create-membership" type="button" class="btn btn-primary" @onClick={{this.showAddMembershipDialog}} @aclContext="App.Role.User.Membership.Create">
             {{t "views.app.role.tabs.user.createMembership"}}
           </AppUi::Button>
         </div>
@@ -148,7 +148,7 @@
                 <td>{{membership.project.name}}</td>
                 <td>{{membership.project.shortCode}}</td>
                 <td>
-                  <AppUi::Button data-btn="delete" type="button" class="btn btn-box-tool" {{action this.deleteMembership membership}} @aclContext="App.Role.User.Delete">
+                  <AppUi::Button data-btn="delete" type="button" class="btn btn-box-tool" @onClick={{fn this.deleteMembership membership}} @aclContext="App.Role.User.Delete">
                     <i class="fa fa-trash" aria-hidden="true"></i>
                   </AppUi::Button>
                 </td>

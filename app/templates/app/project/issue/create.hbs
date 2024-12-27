@@ -227,8 +227,8 @@
     </div>
 
     <div class="col-sm-12">
-      <AppUi::Button type="button" data-btn="save" class="btn btn-primary" {{action "save" "issueCreate"}} @aclContext="App.Project.Issue.Create">{{t "global.form.save"}}</AppUi::Button>
-      <AppUi::Button type="button" data-btn="cancel" class="btn btn-default" {{action "cancel"}}>{{t "global.form.cancel"}}</AppUi::Button>
+      <AppUi::Button type="button" data-btn="save" class="btn btn-primary" @onClick={{fn this.save "issueCreate"}} @disableOnSuccess={{true}} @aclContext="App.Project.Issue.Create">{{t "global.form.save"}}</AppUi::Button>
+      <AppUi::Button type="button" data-btn="cancel" class="btn btn-default" @onClick={{this.cancel}}>{{t "global.form.cancel"}}</AppUi::Button>
     </div>
 
   </div>
