@@ -134,7 +134,6 @@ export default App.extend({
         if (status) {
             issue.statusId = status.id;
         }
-        debugger;
         return issue;
     },
     actions: {
