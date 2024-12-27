@@ -88,8 +88,9 @@ export default App.extend({
 
         let params = this.paramsFor('app.project.issue.edit');
 
+        let issue = this.setDefaultStatusToIssue(_self.statuses, _self.issue, 'new');
         this.set('breadCrumb', { title: '#' + params.issue_number, record: true });
-        controller.set('model', _self.get('issue'));
+        controller.set('model', issue);
         controller.set('project', _self.get('project'));
         controller.set('types', _self.get('types'));
         controller.set('statuses', _self.get('statuses'));
@@ -116,6 +117,25 @@ export default App.extend({
                 controller.model.destroyRecord();
             }
         }
+    },
+    /**
+     * This function is used to set the default status to the issue.
+     * 
+     * @method setDefaultStatusToIssue
+     * @param {Array} statuses The list of statuses
+     * @param {Object} issue The issue model
+     * @param {String} statusName The name of the status to set
+     * @returns {Object} The issue model with the default status set
+     */
+    setDefaultStatusToIssue(statuses, issue, statusName) {
+        let status = statuses.find((status) => {
+            return status.get('name') === statusName.toLowerCase();
+        });
+        if (status) {
+            issue.statusId = status.id;
+        }
+        debugger;
+        return issue;
     },
     actions: {
         /**
