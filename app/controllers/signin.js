@@ -3,9 +3,9 @@
  */
 
 import PrometheusCreateController from "prometheus/controllers/prometheus/create";
-import { service } from '@ember/service';
-import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
+import { service } from "@ember/service";
+import { action } from "@ember/object";
+import { tracked } from "@glimmer/tracking";
 import ENV from "prometheus/config/environment";
 
 /**
@@ -17,7 +17,6 @@ import ENV from "prometheus/config/environment";
  * @author Hammad Hassan gollmer@gmail.com
  */
 export default class SignInController extends PrometheusCreateController {
-
     /**
      * The intl library service that is used in order to get the translations
      *
@@ -26,7 +25,7 @@ export default class SignInController extends PrometheusCreateController {
      * @for SigninController
      * @public
      */
-    @service('intl') intl;
+    @service("intl") intl;
 
     /**
      * The session service which is offered by ember-simple-auth that will be used
@@ -37,11 +36,11 @@ export default class SignInController extends PrometheusCreateController {
      * @for SigninController
      * @public
      */
-    @service('session') session;
+    @service("session") session;
 
     /**
      * This property is used to toggle the forget password form.
-     * 
+     *
      * @property forgetPassword
      * @type Boolean
      * @for SigninController
@@ -51,13 +50,13 @@ export default class SignInController extends PrometheusCreateController {
 
     /**
      * This property is used to store user's email.
-     * 
+     *
      * @property email
      * @type String
      * @for SigninController
      * @public
      */
-    @tracked email = '';
+    @tracked email = "";
 
     /**
      * This property is used to store user's name.
@@ -92,7 +91,7 @@ export default class SignInController extends PrometheusCreateController {
 
     /**
      * This property is used to store user's preferred language.
-     * 
+     *
      * @property preferredLanguage
      * @type String
      * @for SigninController
@@ -102,8 +101,8 @@ export default class SignInController extends PrometheusCreateController {
 
     /**
      * Template's metadata for signin controller.
-     * 
-     * This object holds all of the information that we need to create our schema and also need to 
+     *
+     * This object holds all of the information that we need to create our schema and also need to
      * render the template (in future).
      * @property metadata
      * @type Object
@@ -132,19 +131,19 @@ export default class SignInController extends PrometheusCreateController {
                                 type: "string",
                                 rules: [
                                     {
-                                        name: "required"
+                                        name: "required",
                                     },
                                     {
-                                        name: "email"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                ]
-            }
-        ]
-    }
+                                        name: "email",
+                                    },
+                                ],
+                            },
+                        },
+                    },
+                ],
+            },
+        ],
+    };
 
     /**
      * This function is called on the initialization of the controller. In this function
@@ -172,61 +171,66 @@ export default class SignInController extends PrometheusCreateController {
         let username = _self.username;
         let password = _self.password;
 
-        await _self.session.authenticate('authenticator:oauth2', username, password).then(
-            () => {
-                if (_self.session.isAuthenticated) {
-                    localStorage.removeItem('projectId');
-                    //getting requested url when user was unauthenticated
-                    let oldRequestedUrl = _self.session.oldRequestedUrl;
-                    //if requested url is present then route to that url otherwise route user to /app
-                    let urlToRoute = (oldRequestedUrl && oldRequestedUrl != '/') ? oldRequestedUrl : 'app';
+        await _self.session
+            .authenticate("authenticator:oauth2", username, password)
+            .then(
+                () => {
+                    if (_self.session.isAuthenticated) {
+                        localStorage.removeItem("projectId");
+                        //getting requested url when user was unauthenticated
+                        let oldRequestedUrl = _self.session.oldRequestedUrl;
+                        //if requested url is present then route to that url otherwise route user to /app
+                        let urlToRoute =
+                            oldRequestedUrl && oldRequestedUrl != "/"
+                                ? oldRequestedUrl
+                                : "app";
 
-                    _self.session.handleAuthentication(urlToRoute);
+                        _self.session.handleAuthentication(urlToRoute);
+                    }
+                },
+                (response) => {
+                    new Messenger().post({
+                        message: _self.intl.t(`views.signin.${response.error}`),
+                        type: "error",
+                        showCloseButton: true,
+                    });
                 }
-            },
-            (response) => {
-                new Messenger().post({
-                    message: _self.intl.t(`views.signin.${response.error}`),
-                    type: 'error',
-                    showCloseButton: true
-                });
-            }
-        );
+            );
     }
 
     /**
      * This property returns the boolean value to set the "Remember me" checkbox.
-     * 
+     *
      * @property rememberMe
      * @type Boolean
      * @for SigninController
      */
     get rememberMe() {
-        let rememberMe = localStorage.getItem('remember_me');
+        let rememberMe = localStorage.getItem("remember_me");
 
         // If rememberMe is null, set remember_me property into localstorage
         if (rememberMe === null) {
-            localStorage.setItem('remember_me', false);
+            localStorage.setItem("remember_me", false);
         }
 
-        return (localStorage.getItem('remember_me') === 'true') ? true : false;
+        return localStorage.getItem("remember_me") === "true" ? true : false;
     }
 
     /**
      * This function is used to set remember me property in local storage.
-     * 
+     *
      * @method setRememberMe
-     * @param {String} value 
+     * @param {String} value
      */
     @action setRememberMe(value) {
-        localStorage.setItem('remember_me', value.target.checked);
+        localStorage.setItem("remember_me", value.target.checked);
     }
 
     /**
      * Update the language of the application according to user's preference.
-     * 
+     *
      * @method updateLanguage
-     * @param {Object} language 
+     * @param {Object} language
      */
     @action updateLanguage(language) {
         this.preferredLanguage = language.value;
@@ -234,7 +238,7 @@ export default class SignInController extends PrometheusCreateController {
 
     /**
      * This function toggles the forget password form.
-     * 
+     *
      * @method toggleForgetPassword
      */
     @action toggleForgetPassword() {
@@ -243,53 +247,74 @@ export default class SignInController extends PrometheusCreateController {
 
     /**
      * This function sends the password reset link to user's email.
-     * 
+     *
      * @method sendPasswordResetLink
      */
     @action sendPasswordResetLink() {
         const email = this.email;
         let _self = this;
         let emailModel = {
-            email: email
-        }
+            email: email,
+        };
 
-        this.validate(emailModel, 'forgetPasswordSection').then((validation) => {
-            if (validation.isValid) {
-                fetch(`${ENV.api.host}/api/v${ENV.api.version}/forgetpassword`, {
-                    method: 'POST',
-                    body: JSON.stringify({ email }),
-                    headers: {
-                        'Content-Type': 'application/json'
+        return new Promise((resolve, reject) => {
+            this.validate(emailModel, "forgetPasswordSection").then(
+                (validation) => {
+                    if (validation.isValid) {
+                        fetch(
+                            `${ENV.api.host}/api/v${ENV.api.version}/forgetpassword`,
+                            {
+                                method: "POST",
+                                body: JSON.stringify({ email }),
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                            }
+                        )
+                            .then((response) => {
+                                if (response.ok) {
+                                    new Messenger().post({
+                                        message: _self.intl.t(
+                                            `views.signin.forgetPassword.success`
+                                        ),
+                                        type: "success",
+                                        showCloseButton: true,
+                                    });
+                                    this.toggleForgetPassword();
+                                    resolve();
+                                } else {
+                                    new Messenger().post({
+                                        message: _self.intl.t(
+                                            `views.signin.forgetPassword.error`
+                                        ),
+                                        type: "error",
+                                        showCloseButton: true,
+                                    });
+                                    console.error(
+                                        "Failed to send password reset link"
+                                    );
+                                }
+                            })
+                            .catch((error) => {
+                                new Messenger().post({
+                                    message: _self.intl.t(
+                                        `views.signin.forgetPassword.error`
+                                    ),
+                                    type: "error",
+                                    showCloseButton: true,
+                                });
+                                console.error(
+                                    "An error occurred while sending the password reset link:",
+                                    error
+                                );
+                                reject();
+                            });
+                    } else {
+                        this._showError(validation.errors, "user");
+                        reject();
                     }
-                })
-                    .then(response => {
-                        if (response.ok) {
-                            new Messenger().post({
-                                message: _self.intl.t(`views.signin.forgetPassword.success`),
-                                type: 'success',
-                                showCloseButton: true
-                            });
-                            this.toggleForgetPassword();
-                        } else {
-                            new Messenger().post({
-                                message: _self.intl.t(`views.signin.forgetPassword.error`),
-                                type: 'error',
-                                showCloseButton: true
-                            });
-                            console.error('Failed to send password reset link');
-                        }
-                    })
-                    .catch(error => {
-                        new Messenger().post({
-                            message: _self.intl.t(`views.signin.forgetPassword.error`),
-                            type: 'error',
-                            showCloseButton: true
-                        });
-                        console.error('An error occurred while sending the password reset link:', error);
-                    });
-            } else {
-                this._showError(validation.errors, 'user');
-            }
+                }
+            );
         });
     }
 }

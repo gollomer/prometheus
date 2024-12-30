@@ -4,8 +4,9 @@
 
 import { tracked } from "@glimmer/tracking";
 import PrometheusCreateController from "prometheus/controllers/prometheus/create";
-import { ref } from 'yup';
+import { ref } from "yup";
 import ENV from "prometheus/config/environment";
+import { action } from "@ember/object";
 
 /**
  * The Reset password controller.
@@ -16,16 +17,15 @@ import ENV from "prometheus/config/environment";
  * @author Rana Nouman <ranamnouman@gmail.com>
  */
 export default class ResetPasswordController extends PrometheusCreateController {
-
     /**
      * This property is used to bind with password field.
-     * 
+     *
      * @property password
      * @type String
      * @for ResetPasswordController
      * @public
      */
-    @tracked password = '';
+    @tracked password = "";
 
     /**
      This property is used to bind with confirm password field.
@@ -35,12 +35,12 @@ export default class ResetPasswordController extends PrometheusCreateController 
      * @for ResetPasswordController
      * @public
      */
-    @tracked passwordConfirmation = '';
+    @tracked passwordConfirmation = "";
 
     /**
      * Template's metadata for signin controller.
-     * 
-     * This object holds all of the information that we need to create our schema and also need to 
+     *
+     * This object holds all of the information that we need to create our schema and also need to
      * render the template (in future).
      * @property metadata
      * @type Object
@@ -55,7 +55,8 @@ export default class ResetPasswordController extends PrometheusCreateController 
                     {
                         name: "password",
                         component: "FormFields::FieldText",
-                        placeholder: "views.app.user.create.passwordplaceholder",
+                        placeholder:
+                            "views.app.user.create.passwordplaceholder",
                         label: "views.app.user.create.name",
                         type: "text",
                         value: "value",
@@ -69,16 +70,17 @@ export default class ResetPasswordController extends PrometheusCreateController 
                                 type: "string",
                                 rules: [
                                     {
-                                        name: "required"
-                                    }
-                                ]
-                            }
-                        }
+                                        name: "required",
+                                    },
+                                ],
+                            },
+                        },
                     },
                     {
                         name: "passwordConfirmation",
                         component: "FormFields::FieldText",
-                        placeholder: "views.app.user.create.confirmpasswordplaceholder",
+                        placeholder:
+                            "views.app.user.create.confirmpasswordplaceholder",
                         label: "views.app.user.create.confirmpassword",
                         type: "text",
                         value: "passwordConfirmation",
@@ -92,20 +94,20 @@ export default class ResetPasswordController extends PrometheusCreateController 
                                 type: "string",
                                 rules: [
                                     {
-                                        name: "required"
+                                        name: "required",
                                     },
                                     {
-                                        name: 'oneOf',
-                                        value: [ref('password')]
-                                    }
-                                ]
-                            }
-                        }
+                                        name: "oneOf",
+                                        value: [ref("password")],
+                                    },
+                                ],
+                            },
+                        },
                     },
-                ]
-            }
-        ]
-    }
+                ],
+            },
+        ],
+    };
 
     /**
      * This function is called on the initialization of the controller. In this function
@@ -121,42 +123,42 @@ export default class ResetPasswordController extends PrometheusCreateController 
     }
 
     /**
-     * This function is used to update the user password. User will be routed to the 
+     * This function is used to update the user password. User will be routed to the
      * signin page after successful password update.
-     * 
+     *
      * @method updateUserPassword
      */
+    @action
     async updateUserPassword() {
         let token = this.router.resetToken;
         let url = `${ENV.api.host}/api/v${ENV.api.version}/resetpassword/${token}`;
         let requestBody = {
             password: this.password,
-            resetToken: token
-        }
+            resetToken: token,
+        };
         let _self = this;
 
         await fetch(url, {
-            method: 'PATCH',
+            method: "PATCH",
             body: JSON.stringify(requestBody),
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
+            },
+        }).then((response) => {
+            if (response.ok) {
+                new Messenger().post({
+                    message: _self.intl.t(`views.signin.resetPassword.success`),
+                    type: "success",
+                    showCloseButton: true,
+                });
+                this.router.transitionTo("signin");
+            } else {
+                new Messenger().post({
+                    message: _self.intl.t(`views.signin.resetPassword.error`),
+                    type: "error",
+                    showCloseButton: true,
+                });
             }
-        })
-            .then((response) => {
-                if (response.ok) {
-                    new Messenger().post({
-                        message: _self.intl.t(`views.signin.resetPassword.success`),
-                        type: 'success',
-                        showCloseButton: true
-                    });
-                    this.router.transitionTo('signin');
-                } else {
-                    new Messenger().post({
-                        message: _self.intl.t(`views.signin.resetPassword.error`),
-                        type: 'error',
-                        showCloseButton: true
-                    });
-                }
-            });
+        });
     }
 }

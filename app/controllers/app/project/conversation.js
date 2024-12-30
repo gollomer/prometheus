@@ -264,7 +264,7 @@ export default class AppProjectConversationController extends PrometheusCreateCo
             relatedId: conversationId
         });
 
-        vote.save().then(function (data) {
+        return vote.save().then(function (data) {
             if (data.get('id') !== undefined) {
                 new Messenger().post({
                     message: _self.intl.t("views.app.conversation.voted"),

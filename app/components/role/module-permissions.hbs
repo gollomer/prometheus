@@ -75,7 +75,7 @@
         </table>
     </div>
 
-    <AppUi::Button type="button" data-btn="save" class="btn btn-primary" disabled={{this.isDisabled}} {{on "click" (fn this.updatePermission @name)}}>{{t "global.form.save"}}</AppUi::Button>
-    <AppUi::Button type="button" data-btn="cancel" class="btn btn-default" {{action "cancel"}}>{{t "global.form.cancel"}}</AppUi::Button>
+    <AppUi::Button type="button" data-btn="save" class="btn btn-primary" @onClick={{fn this.updatePermission @name}}>{{t "global.form.save"}}</AppUi::Button>
+    <AppUi::Button type="button" data-btn="cancel" class="btn btn-default" @onClick={{this.cancel}}>{{t "global.form.cancel"}}</AppUi::Button>
     </div>
 </div>

@@ -38,18 +38,6 @@ export default class RoleModulePermissionsComponent extends Component {
     }
 
     /**
-     * This function is triggered when permission is updated and after that this function updates the state of isDisabled
-     * property to true to make save button disabled.
-     *
-     * @method resetChangeState
-     * @for RoleModulePermissionsComponent
-     * @public
-     */
-    resetDisableState() {
-        this.isDisabled = true;
-    }
-
-    /**
      * This function first calls the parent updatePermission action from AppRolePageController and after that calls resetDisableState
      * to again set the state of save button to disabled.
      *
@@ -59,7 +47,6 @@ export default class RoleModulePermissionsComponent extends Component {
      * @public
      */
     @action updatePermission(name) {
-        this.args.updatePermission.perform(name);
-        this.resetDisableState(); // Reset the change state after saving
+        return this.args.updatePermission.perform(name);
     }
 }

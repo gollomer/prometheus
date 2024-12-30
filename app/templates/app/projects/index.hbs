@@ -90,7 +90,7 @@
 
             <div class="search">
               <span data-toggle="tooltip" title="{{t "global.list.searchbox"}}">
-                <AppUi::Button id="toggleFilters" {{action "toggleFilters"}} type="button" class="btn dropdown-toggle" data-toggle="collapse" data-target=".list-view-filters">
+                <AppUi::Button id="toggleFilters" @onClick={{this.toggleFilters}} type="button" class="btn dropdown-toggle" data-toggle="collapse" data-target=".list-view-filters">
                   <span class="caret"></span>
                   <span class="sr-only">{{t "global.list.toggleDropdown"}}</span>
                 </AppUi::Button>
@@ -107,12 +107,12 @@
                 />
                 <span class="glyphicon glyphicon-search form-control-feedback"></span>
               </div>
-              <AppUi::Button type="button" class="btn btn-primary" {{action "searchByRules"}} @aclContext="App.Project.Read">{{t "global.form.search"}}</AppUi::Button>
-              <AppUi::Button type="button" class="btn" {{action "clearSearch"}}>{{t "global.form.clear"}}</AppUi::Button>
+              <AppUi::Button type="button" class="btn btn-primary" @onClick={{this.searchByRules}} @aclContext="App.Project.Read">{{t "global.form.search"}}</AppUi::Button>
+              <AppUi::Button type="button" class="btn" @onClick={{this.clearSearch}}>{{t "global.form.clear"}}</AppUi::Button>
             </div>
             <div class="list-view-filters collapse">
               {{query-builder module="Project" query=this.query}}
-              <AppUi::Button type="button" class="btn btn-primary pull-right" {{action "showSaveSearchDialog"}} @aclContext="App.Project.List.SavedSearch.Create">{{t "global.form.savesearch"}}</AppUi::Button>
+              <AppUi::Button type="button" class="btn btn-primary pull-right" @onClick={{this.showSaveSearchDialog}} @aclContext="App.Project.List.SavedSearch.Create">{{t "global.form.savesearch"}}</AppUi::Button>
               {{#if this.saveSearchDialog}}
                 {{#bootstrap-modal
                     title="global.form.savesearch"
@@ -158,12 +158,12 @@
                 {{#if this.model.meta.links.next}}+{{/if}}
                 <div class="btn-group">
                   {{#if this.model.meta.links.prev}}
-                    <AppUi::Button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="{{t "global.list.prevPage"}}" {{action "paginate" (get-page this.model.meta.links.prev.href)}} @aclContext="App.Project.Read"><i class="fa fa-chevron-left"></i></AppUi::Button>
+                    <AppUi::Button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="{{t "global.list.prevPage"}}" @onClick={{fn this.paginate (get-page this.model.meta.links.prev.href)}} @aclContext="App.Project.Read"><i class="fa fa-chevron-left"></i></AppUi::Button>
                   {{else}}
                     <AppUi::Button type="button" class="btn btn-default btn-sm disabled" data-toggle="tooltip" title="{{t "global.list.prevPage"}}"><i class="fa fa-chevron-left"></i></AppUi::Button>
                   {{/if}}
                   {{#if this.model.meta.links.next}}
-                    <AppUi::Button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="{{t "global.list.nextPage"}}" {{action "paginate" (get-page this.model.meta.links.next.href)}} @aclContext="App.Project.Read"><i class="fa fa-chevron-right"></i></AppUi::Button>
+                    <AppUi::Button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="{{t "global.list.nextPage"}}" @onClick={{fn this.paginate (get-page this.model.meta.links.next.href)}} @aclContext="App.Project.Read"><i class="fa fa-chevron-right"></i></AppUi::Button>
                   {{else}}
                     <AppUi::Button type="button" class="btn btn-default btn-sm disabled" data-toggle="tooltip" title="{{t "global.list.nextPage"}}"><i class="fa fa-chevron-right"></i></AppUi::Button>
                   {{/if}}
@@ -219,19 +219,19 @@
                 <AppUi::Button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="{{t "global.form.massupdate"}}" @aclContext="App.Project.Edit"><i class="fa fa-pencil"></i></AppUi::Button>
                 <AppUi::Button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="{{t "global.form.discuss"}}"><i class="fa fa-comments-o"></i></AppUi::Button>
               </div>
-              <AppUi::Button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="{{t "global.form.refresh"}}" {{action "reloadPage"}}><i class="fa fa-refresh"></i></AppUi::Button>
+              <AppUi::Button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="{{t "global.form.refresh"}}" @onClick={{this.reloadPage}}><i class="fa fa-refresh"></i></AppUi::Button>
               <div class="pull-right">
                 <span class="list-view-count">{{t "global.list.selectedCount" count=this.selectedCount}}</span>
                 {{add (mult (sub this.page 1) 20) 1}}-{{add (mult (sub this.page 1) 20) this.model.length}} / {{add (mult (sub this.page 1) 20) this.model.length}}
                 {{#if this.model.meta.links.next}}+{{/if}}
                 <div class="btn-group">
                   {{#if this.model.meta.links.prev}}
-                    <AppUi::Button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="{{t "global.list.prevPage"}}" {{action "paginate" (get-page this.model.meta.links.prev.href)}} @aclContext="App.Project.Read"><i class="fa fa-chevron-left"></i></AppUi::Button>
+                    <AppUi::Button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="{{t "global.list.prevPage"}}" @onClick={{fn this.paginate (get-page this.model.meta.links.prev.href)}} @aclContext="App.Project.Read"><i class="fa fa-chevron-left"></i></AppUi::Button>
                   {{else}}
                     <AppUi::Button type="button" class="btn btn-default btn-sm disabled" data-toggle="tooltip" title="{{t "global.list.prevPage"}}"><i class="fa fa-chevron-left"></i></AppUi::Button>
                   {{/if}}
                   {{#if this.model.meta.links.next}}
-                    <AppUi::Button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="{{t "global.list.nextPage"}}" {{action "paginate" (get-page this.model.meta.links.next.href)}} @aclContext="App.Project.Read"><i class="fa fa-chevron-right"></i></AppUi::Button>
+                    <AppUi::Button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="{{t "global.list.nextPage"}}" @onClick={{fn this.paginate (get-page this.model.meta.links.next.href)}} @aclContext="App.Project.Read"><i class="fa fa-chevron-right"></i></AppUi::Button>
                   {{else}}
                     <AppUi::Button type="button" class="btn btn-default btn-sm disabled" data-toggle="tooltip" title="{{t "global.list.nextPage"}}"><i class="fa fa-chevron-right"></i></AppUi::Button>
                   {{/if}}
