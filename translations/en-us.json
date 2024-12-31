@@ -760,7 +760,10 @@
           "parent": "Parent",
           "selectparent": "Select the issue parent",
           "people": "People",
-          "estimates": "Estimates"
+          "estimates": "Estimates",
+          "validations": {
+            "endDateGreaterThanStartDate" : "End date should be after start date"
+          }
         },
         "filter": {
           "issueNumber": "Issue Number",
