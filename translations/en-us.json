@@ -10,7 +10,6 @@
     "description": "This field",
     "required": "This field is required",
     "optionality": "This field is required",
-    "oneOf": "{dependentField} must matches",
     "email": "Please enter a valid email address",
     "inclusion": "{description} is not included in the list",
     "exclusion": "{description} is reserved",
@@ -876,7 +875,8 @@
           "validation": {
             "usernameTaken": "Username already taken!",
             "usernameAvailable": "Username available",
-            "usernameTakenByYou": "Username already taken by yourself"
+            "usernameTakenByYou": "Username already taken by yourself",
+            "passwordMatch": "Password must matches"
           }
         },
         "edit": {

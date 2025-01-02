@@ -107,75 +107,31 @@ export default class PrometheusCreateController extends PrometheusController {
      *
      * @method validateField
      * @param {String} schemaName
-     * @param {Object} actualField
-     * @param {Object} dependentField
+     * @param {Object} field
      * @param {Event} event
      * @protected
      */
-    @action validateField(schemaName, actualField, dependentField, event) {
+    @action validateField(schemaName, field, event) {
         //use model if passed otherwise use default "this.model"
-        let model = actualField.model ?? this.model;
+        let model = field.model ?? this.model;
 
         //Validate field if it exists on schema object
-        if (this[schemaName].fields[actualField.name]) {
+        if (this[schemaName].fields[field.name]) {
             try {
                 this.beforeValidate(model);
-                this[schemaName].validateSyncAt(actualField.name, model);
+                this[schemaName].validateSyncAt(field.name, model);
 
-                //If validation is passed then remove previous message of actual field (if exists)
-                _.set(this.message, `${schemaName}.${actualField.name}`, "");
+                //If validation is passed then remove previous message of field (if exists)
+                _.set(this.message, `${schemaName}.${field.name}`, "");
                 this.message = { ...this.message };
 
-                dependentField &&
-                    this.validateDependentField(
-                        schemaName,
-                        actualField,
-                        dependentField,
-                        model
-                    );
             } catch (e) {
                 this.setValidationMessages(
                     e,
                     schemaName,
-                    actualField,
-                    dependentField
+                    field
                 );
             }
-        }
-    }
-
-    /**
-     * This function is used to validates the dependent field. Let say there are two fields, Password and
-     * Confirm Password, and we want to validate the confirm password field when user give some input in password
-     * field. So this function will apply validation on confirm password (dependent field) and will show appropriate
-     * message on that field.
-     *
-     * @method validateDependentField
-     * @param {String} schemaName
-     * @param {Object} actualField
-     * @param {Object} dependentField
-     * @param {Object} model
-     * @protected
-     */
-    validateDependentField(schemaName, actualField, dependentField, model) {
-        /**
-         * Check if validateDependent flag is true and  value of the actual and dependent field are equal, then
-         * remove the error message of dependent field.
-         */
-        if (
-            actualField.validateDependent &&
-            actualField.value === dependentField.value
-        ) {
-            _.set(this.message, `${schemaName}.${dependentField.name}`, "");
-        }
-
-        //If validateDependent flag is true then validate it.
-        if (actualField.validateDependent) {
-            //Mutate name of actual field to dependent field in order to show appropriate message to the dependent field.
-            actualField.name = dependentField.name;
-
-            //validate dependent field
-            this[schemaName].validateSyncAt(dependentField.name, model);
         }
     }
 
@@ -183,29 +139,27 @@ export default class PrometheusCreateController extends PrometheusController {
      * This function is used to set validation messages against each field.
      *
      * @method setValidationMessages
-     * @param {Error} e
-     * @param {Object} actualField
+     * @param {Error} error
      * @param {String} schemaName
-     * @param {Object} dependentField
+     * @param {Object} field
      * @protected
      */
-    setValidationMessages(error, schemaName, actualField, dependentField) {
-        switch (error.type) {
-            case "oneOf":
-                _.set(
-                    this.message,
-                    `${schemaName}.${actualField.name}`,
-                    this.intl.t(`errors.${error.type}`, {
-                        dependentField: dependentField.t,
-                    })
-                );
-                break;
-            default:
-                _.set(
-                    this.message,
-                    `${schemaName}.${actualField.name}`,
-                    this.intl.t(`errors.${error.type}`)
-                );
+    setValidationMessages(error, schemaName, field) {
+        let fieldName = (error.params.path) ? error.params.path : field.name;
+        let defaultErrorTypes = ['required', 'optionality'];
+        if (defaultErrorTypes.includes(error.type)) {
+            _.set(
+                this.message,
+                `${schemaName}.${fieldName}`,
+                this.intl.t(`errors.${error.type}`)
+            );
+        } else {
+            _.set(
+                this.message,
+                `${schemaName}.${fieldName}`,
+                error.errors[0]
+            );
+
         }
 
         this.message = { ...this.message };

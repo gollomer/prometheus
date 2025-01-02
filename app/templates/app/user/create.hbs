@@ -90,9 +90,8 @@
                 @value={{this.model.password}}
                 @data-field="user.password" 
                 @lengthRequired={{false}}
-                @validate={{action this.validateField "userCreate" (hash name="password" value=this.model.password validateDependent="true")}}
+                @validate={{action this.validateField "userCreate" (hash name="password" value=this.model.password)}}
                 @message={{this.message.userCreate.password}}
-                @dependentField={{hash name="passwordConfirmation" t=(t "views.app.user.create.password") oneOf="true" value=this.model.passwordConfirmation}}
                 @aclContext="App.User.Create.Password"
               />
 
@@ -105,7 +104,6 @@
                 @lengthRequired={{false}} 
                 @validate={{action this.validateField "userCreate" (hash name="passwordConfirmation" value=this.model.passwordConfirmation)}}
                 @message={{this.message.userCreate.passwordConfirmation}}
-                @dependentField={{hash name="password" t=(t "views.app.user.create.password" value=this.model.password)}}
                 @aclContext="App.User.Create.ConfirmPassword"
               />                        
 
