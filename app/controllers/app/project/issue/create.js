@@ -133,6 +133,20 @@ export default class AppProjectIssueCreateController extends PrometheusCreateCon
                                 rules: [
                                     {
                                         name: "required"
+                                    },
+                                    {
+                                        name: "test",
+                                        value: [
+                                            'end-date-greater-than-start-date',
+                                            this.intl.t(
+                                                'views.app.issue.create.validations.endDateGreaterThanStartDate'
+                                            ),
+                                            function(value) {
+                                                const endDate = new Date(value);
+                                                const startDate = new Date(this.parent.startDate);
+                                                return endDate > startDate;
+                                            }
+                                        ]
                                     }
                                 ]
                             }
