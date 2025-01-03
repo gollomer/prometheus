@@ -46,17 +46,10 @@ export default App.extend({
         Logger.debug('-Prometheus.Routes.App.Project.Issue.Create::afterModel()');
 
         return hashSettled({
-            issue: _self.store.createRecord('issue', {
-                assignee: _self.get('currentUser').user.id,
-                owner: _self.get('currentUser').user.id
-            }),
             project: _self.store.query('project', projectOptions)
         }).then(function (results) {
             let data = extractHashSettled(results, 'project');
             Logger.debug(data);
-            _self.set('issue', data.issue);
-            const issueDescription = _.clone(data.issue.description);
-            _self.set('issueDescription', issueDescription);
             _self.set('project', data.project.objectAt(0));
             _self.set('types', data.project.firstObject.issuetypes);
             _self.set('statuses', data.project.firstObject.issuestatuses);
@@ -78,22 +71,24 @@ export default App.extend({
      *
      * @method setupController
      * @param {Prometheus.Controllers.Issue} controller The controller object for the issues
-     * @param {Prometheus.Models.Issue} model The model that is created by this route
      * @private
      */
     setupController: function (controller) {
         Logger.debug('Prometheus.Routes.App.Project.Issue.Create::setupController');
 
         let _self = this;
+        let issue = _self.store.createRecord('issue', {
+            assignee: _self.currentUser.user.id,
+            owner: _self.currentUser.user.id,
+            project: _self.project
+        });
 
-        let params = this.paramsFor('app.project.issue.edit');
-
-        this.set('breadCrumb', { title: '#' + params.issue_number, record: true });
-        controller.set('model', _self.get('issue'));
+        const issueDescription = _.clone(issue.description);
+        controller.set('model', issue);
         controller.set('project', _self.get('project'));
         controller.set('types', _self.get('types'));
         controller.set('statuses', _self.get('statuses'));
-        controller.set('issueDescription', _self.get('issueDescription'));
+        controller.set('issueDescription', issueDescription);
 
         let priority = (new format(this)).getList('views.app.issue.lists.priority');
         controller.set('priority', priority);
