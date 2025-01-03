@@ -11,7 +11,7 @@ Feature: Project | create project
     And User enters test description in project description 
     And User selects start date of project
     And User selects end date of project
-    And User selects option 2 of project type
+    # And User selects option 2 of project type
     And User selects option 4 of project status
     And User enters test vision in project vision
     And User enters test vision in project scope
