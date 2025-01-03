@@ -202,7 +202,9 @@
                   @data-field="project.issuetypes"
                   @validate={{action this.validateField "projectCreate" (hash name="hasIssuetypes" value=this.model.hasIssuetypes)}}
                   @message={{this.message.projectCreate.hasIssuetypes}}
-                  @aclContext="App.Project.Create.IssueTypes"    
+                  @aclContext="App.Project.Create.IssueTypes"
+                  @searchEnabled={{true}}
+                  @search={{this.searchIssueTypes}}                  
                 />
 
               </div>
