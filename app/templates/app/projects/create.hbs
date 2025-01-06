@@ -98,21 +98,6 @@
                 />
 
                 <FormFields::FieldRelate
-                  @placeholder={{t "views.app.project.create.typeplaceholder"}}
-                  @label={{t "views.app.project.create.type"}}
-                  @value={{this.model.type}}
-                  @options={{this.type}}
-                  @selected={{find-by "value" this.model.type this.type}}
-                  @searchField="label"
-                  @onchange={{action "selectRelated" this.model 'type'}}
-                  @relateType="relate-simple"
-                  @data-field="project.type"
-                  @validate={{action this.validateField "projectCreate" (hash name="type" value=this.model.type)}}
-                  @message={{this.message.projectCreate.type}}
-                  @aclContext="App.Project.Create.Type"
-                />
-
-                <FormFields::FieldRelate
                   @placeholder={{t "views.app.project.create.statusplaceholder"}}
                   @label={{t "views.app.project.create.status"}}
                   @value={{this.model.status}}
