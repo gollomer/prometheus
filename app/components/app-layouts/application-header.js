@@ -194,11 +194,11 @@ export default class ApplicationHeaderComponent extends AppComponent {
      * @param {String} projectId 
      * @param {Boolean} contextRequired 
      */
-    @action routeToModule(moduleName, routePath, projectId, contextRequired = false) {
+    @action routeToModule(moduleName, routePath, projectShortCode, contextRequired = false) {
         let _self = this;
 
-        if (contextRequired && projectId) {
-            this.router.transitionTo(routePath, { project_id: projectId });
+        if (contextRequired && projectShortCode) {
+            this.router.transitionTo(routePath, { shortcode: projectShortCode });
         }
         else if (!contextRequired) {
             this.router.transitionTo(routePath);

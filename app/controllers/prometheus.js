@@ -69,6 +69,16 @@ export default class PrometheusController extends Controller {
 	 */
 	@service('router') router;
 
+    /**
+     * The trackedProject service provides the selected project.
+     *
+     * @property trackedProject
+     * @type Ember.Service
+	 * @for Prometheus.Controllers.Prometheus
+     * @private
+     */
+    @service trackedProject;	
+
 	/**
 	 * The settings service maintains all of the system level configurations.
 	 *

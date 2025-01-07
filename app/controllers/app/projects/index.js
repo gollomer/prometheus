@@ -37,7 +37,7 @@ export default class AppProjectsIndexController extends PrometheusListController
      */
     @action openDetail(project) {
         Logger.debug("Prometheus.Controllers.Projects.Index::openDetail");
-        this.transitionToRoute('app.project.index', { project_id: project.get('id') });
+        this.transitionToRoute('app.project.index', { shortcode: project.shortCode });
         Logger.debug("-Prometheus.Controllers.Projects.Index::openDetail");
     }
 

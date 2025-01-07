@@ -178,7 +178,6 @@
                   <tr>
                     <th></th>
                     <th class="{{sortable-class "Project.name" this.sort this.order}}" data-sort="Project.nameSortable"><a href="javascript:void(0);" {{action "sortData" 'Project.name'}}>{{t "views.app.project.list.name"}}</a></th>
-                    <th class="{{sortable-class "Project.type" this.sort this.order}}" data-sort="Project.typeSortable"><a href="javascript:void(0);" {{action "sortData" 'Project.type'}}>{{t "views.app.project.list.type"}}</a></th>
                     <th class="{{sortable-class "owner.name" this.sort this.order}}" data-sort="owner.nameSortable"><a href="javascript:void(0);" {{action "sortData" 'owner.name'}}>{{t "views.app.project.list.owner"}}</a></th>
                     <th class="project-description">{{t "views.app.project.list.description"}}</th>
                     <th class="{{sortable-class "Project.status" this.sort this.order}}" data-sort="Project.statusSortable"><a href="javascript:void(0);" {{action "sortData" 'Project.status'}}>{{t "views.app.project.list.status"}}</a></th>
@@ -192,7 +191,7 @@
                       <td>
                         <FormFields::FieldCheckbox @select={{action this.select}} @data-select={{project.id}} @aclContex="App.Project.List.SelectProject"/>
                       </td>
-                      <td class="project-name"><LinkTo @route="app.project" @model={{project.id}} {{action "openDetail" project}}>{{project.name}}</LinkTo></td>
+                      <td class="project-name"><LinkTo @route="app.project" @model={{project.shortCode}}>{{project.name}}</LinkTo></td>
                       <td class="project-type">{{t (concat "views.app.project.detail.lists.type." project.type)}}</td>
                       <td class="project-owner"><LinkTo @route="app.user.page" @model={{project.owner.id}}>{{project.owner.name}}</LinkTo></td>
                       <td class="project-description">{{project.description}}</td>

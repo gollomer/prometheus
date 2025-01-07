@@ -4,8 +4,8 @@ import * as date from '../helpers/getDate';
 import _ from 'lodash';
 
 export default Factory.extend({
-    name() {
-        return faker.company.companyName(0);
+    name(i) {
+        return `project_${++i}`;
     },
     dateCreated() {
         return date.createdDate(20, 30);

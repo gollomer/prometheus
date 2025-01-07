@@ -43,7 +43,7 @@ export default Create.extend({
         Logger.debug('Prometheus.Routes.App.Project.Issue.Edit::afterModel()');
         let _self = this;
 
-        let projectId = _self.paramsFor('app.project').project_id;
+        let projectId = _self.trackedProject.getProjectId();
         let issueNumber = model.issue_number;
 
         let projectOptions = {

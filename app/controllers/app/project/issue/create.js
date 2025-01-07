@@ -262,7 +262,6 @@ export default class AppProjectIssueCreateController extends PrometheusCreateCon
      * @param model
      */
     beforeSave(model) {
-        model.set('projectId', this.target.currentState.routerJsState.params["app.project"].project_id);
         model.set('reportedUser', this.currentUser.user.id);
         model.set('startDate', moment(model.get('startDate')).format("YYYY-MM-DD"));
         model.set('endDate', moment(model.get('endDate')).format("YYYY-MM-DD"));
@@ -310,8 +309,7 @@ export default class AppProjectIssueCreateController extends PrometheusCreateCon
      * @protected
      */
     afterCancel() {
-        let projectId = this.target.currentState.routerJsState.params["app.project"].project_id;
-        this.transitionToRoute('app.project.issue', { project_id: projectId });
+        this.transitionToRoute('app.project.issue', {  shortcode: this.trackedProject.shortCode });
     }
 
     /**

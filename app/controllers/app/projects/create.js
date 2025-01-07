@@ -279,7 +279,7 @@ export default class AppProjectsCreateController extends PrometheusCreateControl
 	 */
 	navigateToSuccess(model) {
 		this.transitionToRoute('app.project', {
-			project_id: model.get('id')
+			shortcode: model.shortCode
 		});
 	}
 

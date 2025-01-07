@@ -132,7 +132,7 @@ export default class AppProjectIndexController extends PrometheusController {
      */
     @action navigateToProjectPage(entity, query) {
         Logger.debug("AppProjectIndexController::navigateToProjectPage(" + entity + "," + query + ")");
-        this.transitionToRoute('app.project.' + entity, { project_id: this.projectId });
+        this.transitionToRoute('app.project.' + entity, { shortcode: this.trackedProject.shortCode });
     }
 
     /**
@@ -146,19 +146,19 @@ export default class AppProjectIndexController extends PrometheusController {
      */
     @action navigateToIssuePage(issueNumber) {
         Logger.debug("AppProjectIndexController::navigateToIssuePage(" + issueNumber + ")");
-        this.transitionToRoute('app.project.issue.page', { project_id: this.projectId, issue_number: issueNumber });
+        this.transitionToRoute('app.project.issue.page', { shortcode: this.trackedProject.shortCode, issue_number: issueNumber });
     }
 
     /**
      * This action is used to navigate the user to the project's edit page
      *
      * @method editProject
-     * @param {String} projectId
+     * @param {String} projectShortCode
      * @public
      */
-    @action editProject(projectId) {
-        Logger.debug('Prometheus.App.Projects.Edit::editProject(' + projectId + ')');
-        this.transitionToRoute('app.projects.edit', projectId);
+    @action editProject(projectShortCode) {
+        Logger.debug('Prometheus.App.Projects.Edit::editProject(' + projectShortCode + ')');
+        this.transitionToRoute('app.projects.edit', projectShortCode);
         Logger.debug('-Prometheus.App.Projects.Edit::editProject');
     }
 

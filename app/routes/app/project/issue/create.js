@@ -8,6 +8,7 @@ import extractHashSettled from 'prometheus/utils/rsvp/extract-hash-settled';
 import format from "prometheus/utils/data/format";
 import Logger from "js-logger";
 import _ from 'lodash';
+import { inject } from '@ember/service';
 
 /**
  * This is the route that will handle the creation of new issues
@@ -18,7 +19,7 @@ import _ from 'lodash';
  * @extends App
  * @author Hammad Hassan <gollomer@gamil.com>
  */
-export default App.extend({
+export default App.extend({    
 
     /**
      * We are using dynamic segments and since model is not called
@@ -34,7 +35,7 @@ export default App.extend({
     afterModel() {
         Logger.debug('Prometheus.Routes.App.Project.Issue.Create::afterModel()');
         let _self = this;
-        let projectId = _self.paramsFor('app.project').project_id;
+        let projectId = _self.trackedProject.getProjectId();
 
         let projectOptions = {
             query: "(Project.id : " + projectId + ")",

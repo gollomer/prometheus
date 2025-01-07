@@ -19,6 +19,16 @@ import extractHashSettled from "prometheus/utils/rsvp/extract-hash-settled";
 export default App.extend({
 
     /**
+     * The trackedProject service provides id of the selected project.
+     *
+     * @property trackedProject
+     * @type Ember.Service
+     * @for Project
+     * @private
+     */
+    trackedProject: inject(),    
+
+    /**
      * We need to reload the model as the values related ot the page's data are
      * changed so we are relying on the queryParams provided by Ember to reload
      * the model as the following parameter are changed.
@@ -84,16 +94,6 @@ export default App.extend({
     query: '',
 
     /**
-     * The identifier of the project that we need to load the issues for
-     *
-     * @property projectId
-     * @type String
-     * @for Index
-     * @private
-     */
-    projectId: null,
-
-    /**
      * These are the saved searches related to the issues
      *
      * @property savedsearches
@@ -157,7 +157,7 @@ export default App.extend({
         }
 
         // Get the projectId from the parent
-        let projectId = this.paramsFor('app.project').project_id;
+        let projectId = this.trackedProject.getProjectId();
         Logger.debug('ProjectId : '+projectId);
 
         // Make sure that projectId is set for every query
@@ -198,12 +198,8 @@ export default App.extend({
      */
     afterModel(){
         let _self = this;
-        let projectId = _self.paramsFor('app.project').project_id;
-        if (projectId === undefined && _self.context !== undefined) {
-            if (_self.context.project_id !== undefined) {
-                projectId = _self.context.project_id;
-            }
-        }
+        let projectId = _self.trackedProject.getProjectId();
+        
         let savedSearchesOption = {
             query: '((Savedsearch.relatedTo : issue) AND (Savedsearch.projectId : '+projectId+') AND (Savedsearch.createdUser : '+_self.get('currentUser.user.id')+'))',
             limit: -1
