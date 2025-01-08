@@ -617,7 +617,7 @@ export default class AppProjectIssuePageController extends PrometheusController.
     @action navigateToIssue(issueNumber, projectId) {
         this.transitionToRoute('app.project.issue.page', {
             issue_number: issueNumber,
-            project_id: projectId
+            shortcode: this.trackedProject.shortCode
         });
     }
 

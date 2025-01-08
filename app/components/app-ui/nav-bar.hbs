@@ -37,7 +37,7 @@
 
       <li class="treeview">
         {{#if definition.projectRelated}}
-          <a href="/{{this.appPrefix}}/{{this.projectId}}/{{definition.anchorRoute}}">
+          <a href="/{{this.appPrefix}}/{{this.trackedProject.shortCode}}/{{definition.anchorRoute}}">
             <i class="fa fa-{{definition.icon}}"></i>
             <span>{{t definition.label}}</span>
             <span class="pull-right-container">
@@ -58,7 +58,7 @@
             {{#each-in menu as |entity item|}}
               <li>
                 {{#if definition.projectRelated}}
-                  <a href="/{{this.appPrefix}}/{{this.projectId}}/{{item.anchorRoute}}" {{action "navigate" item.route  item.routeParams item.anchorRoute this.projectId}}>
+                  <a href="/{{this.appPrefix}}/{{this.trackedProject.shortCode}}/{{item.anchorRoute}}" {{action "navigate" item.route  item.routeParams item.anchorRoute this.trackedProject.shortCode}}>
                     <i class="fa fa-circle-o {{item.className}}"></i>{{t item.label}}
                   </a>
                 {{else}}
@@ -77,7 +77,7 @@
     {{else}}
       <li class="treeview">
         {{#if definition.projectRelated}}
-          <a href="/{{this.appPrefix}}/{{this.projectId}}/{{definition.anchorRoute}}" {{action "navigate" definition.route definition.routeParams definition.anchorRoute this.projectId}}>
+          <a href="/{{this.appPrefix}}/{{this.trackedProject.shortCode}}/{{definition.anchorRoute}}" {{action "navigate" definition.route definition.routeParams definition.anchorRoute this.trackedProject.shortCode}}>
             <i class="fa fa-{{definition.icon}}"></i>
             <span>{{t definition.label}}</span>
           </a>

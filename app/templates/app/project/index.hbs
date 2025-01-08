@@ -16,7 +16,7 @@
 
             <div class="box-tools pull-right">
               <span class="project-status"><span class="badge {{this.model.status}}">{{t (concat "views.app.project.lists.status." this.model.status)}}</span></span>
-              <AppUi::Button data-btn="edit" type="button" class="btn btn-box-tool" data-toggle="tooltip" title="{{t "global.form.edit"}}" @onClick={{fn this.editProject this.model.id}} @aclContext="App.Project.Edit"><i class="fa fa-pencil"></i></AppUi::Button>
+              <AppUi::Button data-btn="edit" type="button" class="btn btn-box-tool" data-toggle="tooltip" title="{{t "global.form.edit"}}" @onClick={{fn this.editProject this.model.shortCode}} @aclContext="App.Project.Edit"><i class="fa fa-pencil"></i></AppUi::Button>
               <AppUi::Button type="button" class="btn btn-box-tool" data-toggle="tooltip" title=""><i class="fa fa-gears"></i></AppUi::Button>
             </div>
             {{!-- /.box-tools --}}
