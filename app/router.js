@@ -60,6 +60,7 @@ Router.map(function() {
   });
   this.route('signin', function() {});
   this.route('reset-password');
+  this.route('not-found', {path: '/*path'});
 });
 
 export default Router;

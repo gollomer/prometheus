@@ -104,7 +104,7 @@ export default class NavBarComponent extends AppComponent {
         let selectedProject = this.trackedProject.getProject();
 
         if(selectedProject.shortCode !== undefined){
-            this.router.transitionTo('app.project', { shortcode: selectedProject.shortCode });
+            this.router.transitionTo('app.project', { shortcode: selectedProject.shortCode.toLowerCase() });
         }
     }
 }

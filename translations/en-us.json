@@ -35,7 +35,9 @@
     "api": {
       "forbidden": "Forbidden",
       "pageNotFound": "Oops! Page not found",
-      "internalServerError": "Internal Server Error"
+      "internalServerError": "Internal Server Error",
+      "returnTo": "Return to",
+      "homepage": "home page"
     }
   },
   "global": {
