@@ -79,6 +79,6 @@ export default class TrackedProjectService extends Service {
 	 * @public
 	 */
 	get shortCode() {
-		return this.getProject()?.shortCode;
+		return this.getProject()?.shortCode?.toLowerCase();
 	}
 }
