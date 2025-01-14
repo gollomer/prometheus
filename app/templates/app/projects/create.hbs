@@ -41,15 +41,8 @@
                     @validate={{action this.validateField "projectCreate" (hash name="name" value=this.model.name)}}
                     @message={{this.message.projectCreate.name}}
                     @aclContext="App.Project.Create.Name"
-                    {{autofocus}}                  
+                    {{autofocus}}
                   />
-
-                  <div class="form-field form-field-static ember-view">
-                    <span class="ember-text-field form-control input-sm data-input ember-view">{{this.shortCode}}</span>
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label class="floating-label active">{{t "views.app.project.create.shortcode"}}</label>
-                  </div>
                 </div>
 
                 <FormFields::FieldTextArea
@@ -94,7 +87,9 @@
                   @showDropdowns={{true}}
                   @validate={{action this.validateField "projectCreate" (hash name="endDate" value=this.model.endDate)}}
                   @message={{this.message.projectCreate.endDate}}
-                  @aclContext="App.Project.Create.EndDate"                            
+                  @aclContext="App.Project.Create.EndDate"
+                  @showFieldInfo={{this.showFieldInfo}}
+                  @info={{t "views.app.project.create.endDateInfo"}}                                     
                 />
 
                 <FormFields::FieldRelate
@@ -110,6 +105,8 @@
                   @validate={{action this.validateField "projectCreate" (hash name="status" value=this.model.status)}}
                   @message={{this.message.projectCreate.status}}
                   @aclContext="App.Project.Create.Status"
+                  @showFieldInfo={{this.showFieldInfo}}
+                  @info={{t "views.app.project.create.statusInfo"}}
                 />
 
                 <FormFields::FieldTextArea
@@ -189,7 +186,9 @@
                   @message={{this.message.projectCreate.hasIssuetypes}}
                   @aclContext="App.Project.Create.IssueTypes"
                   @searchEnabled={{true}}
-                  @search={{this.searchIssueTypes}}                  
+                  @search={{this.searchIssueTypes}}  
+                  @showFieldInfo={{this.showFieldInfo}}
+                  @info={{t "views.app.project.create.issueTypesInfo"}}                                  
                 />
 
               </div>
