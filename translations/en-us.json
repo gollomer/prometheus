@@ -451,7 +451,10 @@
           "scopeplaceholder": "What is the project scope",
           "created": "<strong>{name}</strong> created successfully",
           "issuetypes": "Issue Types",
-          "selectissuetypes": "Select issue type this project will support"
+          "selectissuetypes": "Select issue type this project will support",
+          "endDateInfo": "Sets the deadline for project completion.",
+          "statusInfo": "Defines the current state of the project.",
+          "issueTypesInfo": "Defines the types of issues that can be created in this project."
         },
         "list": {
           "savedsearch": {

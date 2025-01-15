@@ -93,6 +93,15 @@ export default class AppProjectsCreateController extends PrometheusCreateControl
 		]
 	};
 
+    /**
+     * This flag is used to show the field information.
+     * 
+     * @property showFieldInfo
+     * @type Boolean
+     * @for Create
+     */
+    showFieldInfo = true;	
+
 	/**
 	 * This function is called on the initialization of the controller. In this function
 	 * we're calling setupSchema method in order to generate schema, by analyzing metadata

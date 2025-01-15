@@ -50,6 +50,15 @@ export default class PrometheusCreateController extends PrometheusController {
     module = "";
 
     /**
+     * This flag is used to show the field information.
+     * 
+     * @property showFieldInfo
+     * @type Boolean
+     * @for Create
+     */
+    showFieldInfo = false;
+
+    /**
      * This is the controller for the app, we are injecting it in order to
      * gain access to the data that is fetched by this controller
      *
