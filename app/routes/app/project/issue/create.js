@@ -81,7 +81,8 @@ export default App.extend({
         let issue = _self.store.createRecord('issue', {
             assignee: _self.currentUser.user.id,
             owner: _self.currentUser.user.id,
-            project: _self.project
+            project: _self.project,
+            projectId: _self.project.id
         });
 
         const issueDescription = _.clone(issue.description);
