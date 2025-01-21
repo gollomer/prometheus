@@ -22,30 +22,21 @@
         </div>
         <div class="row">
 
-          <div class="col-xs-12">
-            <button type="submit" class="btn btn-primary btn-block btn-flat">{{t "global.form.signin"}}</button>
-          </div>
-
-          <div class="col-xs-4 col-xs-offset-4">
+          <div class="col-sm-12 text-center">
             <div class="checkbox icheck">
               <input type="checkbox" onchange={{action "setRememberMe"}} checked={{this.rememberMe}}>
               <label>{{t "views.signin.remember"}}</label>
             </div>
           </div>
 
+          <div class="col-xs-12">
+            <button type="submit" class="btn btn-primary btn-block btn-flat">{{t "global.form.signin"}}</button>
+          </div>
+
         </div>
       </form>
 
-      <div class="social-auth-links text-center">
-        <p>{{t "views.signin.or"}}</p>
-        <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i>{{t "views.signin.facebook"}}</a>
-        <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i>{{t "views.signin.google"}}</a>
-      </div>
-      {{!-- /.social-auth-links --}}
-
-      <a data-toggle-forget-password onclick={{this.toggleForgetPassword}}>{{t "views.signin.forgot"}}</a><br>
-
-      <div class="row">
+      <div class="row text-right" data-signin="lang-forget">
         <div class="col-md-4 col-xs-12">
           <AppUi::Language
             @placeholder={{t "views.app.user.create.languageplaceholder"}}
@@ -53,6 +44,10 @@
             @onchange={{this.updateLanguage}}
           />
       </div>
+
+        <div class="col-md-8 col-xs-12">
+          <a data-toggle-forget-password onclick={{this.toggleForgetPassword}}>{{t "views.signin.forgot"}}</a><br>
+        </div>
       </div>      
     </div>
   {{else}}
