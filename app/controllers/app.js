@@ -134,7 +134,7 @@ export default class AppController extends PrometheusController {
         Logger.debug('+Prometheus.Controllers.App::itemSearched');
         let _self = this;
 
-        _self.transitionToRoute('app.project', selected.project.get('id'));
+        _self.transitionToRoute('app.project', selected.project.get('shortCode'));
         _self.transitionToRoute('app.project.issue.page', selected.number);
         Logger.debug('-Prometheus.Controllers.App::itemSearched');
     }
