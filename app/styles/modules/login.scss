@@ -23,4 +23,16 @@
   -moz-box-shadow:    0.3rem 0.3rem 0.5rem 0.3rem #CCC;
   -webkit-box-shadow: 0.3rem 0.3rem 0.5rem 0.3rem #CCC;
   box-shadow:         0.3rem 0.3rem 0.5rem 0.3rem #CCC;
+
+  .icheck {
+    margin-top: 0;
+
+    label {
+      user-select: none;
+    }
+  }
+
+  [data-signin="lang-forget"] {
+    @include flexbox($alignItems: center);
+  }
 }
