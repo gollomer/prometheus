@@ -92,21 +92,6 @@
               <small>{{t "views.app.member"}}{{get-date this.currentUser.user 'createdDate' 'MMM YYYY'}}</small>
             </p>
           </li>
-          {{!-- Menu Body --}}
-          <li class="user-body">
-            <div class="row">
-              <div class="col-xs-4 text-center">
-                <a href="#">{{t "views.app.activity.title"}}</a>
-              </div>
-              <div class="col-xs-4 text-center">
-                <a href="#">{{t "views.app.today"}}</a>
-              </div>
-              <div class="col-xs-4 text-center">
-                <a href="#">{{t "views.app.history"}}</a>
-              </div>
-            </div>
-            {{!-- /.row --}}
-          </li>
           {{!-- Menu Footer--}}
           <li class="user-footer">
             <div class="pull-left">
@@ -125,10 +110,6 @@
             </div>
           </li>
         </ul>
-      </li>
-      {{!-- Control Sidebar Toggle Button --}}
-      <li>
-        <a href="javascript:void(0)" data-toggle="control-sidebar"><ion class="ion-md-chatboxes"></ion></a>
       </li>
     </ul>
   </div>
