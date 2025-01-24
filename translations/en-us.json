@@ -447,7 +447,7 @@
           "startdateplaceholder": "Enter the project start date",
           "typeplaceholder": "Select the type of project",
           "statusplaceholder": "Which status is the project in?",
-          "visionholder": "What is the project vision",
+          "visionplaceholder": "What is the project vision",
           "scopeplaceholder": "What is the project scope",
           "created": "<strong>{name}</strong> created successfully",
           "issuetypes": "Issue Types",
