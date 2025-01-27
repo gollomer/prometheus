@@ -19,6 +19,16 @@ export const when = function () {
 					await fillIn(elementToFill, content);
 					assert.ok(true, `User enters ${fieldName}`);
 				}
+		},
+		{
+			'User enters $content in project description': (assert, ctx) =>
+				async function (content) {
+					let descriptionEl = document.querySelector(
+						'div[data-field="project.description"] [contenteditable="true"]'
+					);
+					await fillIn(descriptionEl, content);
+					assert.ok(true, `User enters description`);
+				}
 		}
 	];
 };
