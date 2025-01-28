@@ -45,13 +45,19 @@
                   />
                 </div>
 
-                <FormFields::FieldTextArea
-                  @placeholder={{t "views.app.project.create.descriptionplaceholder"}}
-                  @label={{t "views.app.project.create.description"}}
-                  @value={{this.model.description}}
-                  @data-field="project.description"
-                  @aclContext="App.Project.Create.Description"
+              <div data-field="project.description" class="form-field ember-view">
+                <AppUi::ToastUi
+                    @contents={{readonly this.model.description}}
+                    @initialValue={{this.model.description}}
+                    @editType='wysiwyg'
+                    @hide={{array 'footer'}}
+                    @onContentChange={{action "selectStatic" this.model 'description'}}              
                 />
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label class="floating-label focused-field">{{t "views.app.project.create.description"}}</label>
+                <span class="count pull-right"></span>
+              </div>                
 
                 <FormFields::FieldDate
                   @placeholder={{t "views.app.project.create.startdateplaceholder"}}
