@@ -186,4 +186,24 @@ export default class PrometheusController extends Controller {
 			this[key] = value;
 		});
 	}
+
+	/**
+	 * This function scrolls to the given element and highlights it (if needed).
+	 * 
+	 * @method scrollAndHighlight
+	 * @param {HTMLElement} element
+	 * @param {Boolean} isHighlight
+	 * @public
+	 */
+	scrollAndHighlight(element, isHighlight = false) {
+		if (element) {
+			element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+			if (isHighlight) {
+				element.classList.add('highlight');
+				setTimeout(() => {
+					element.classList.remove('highlight');
+				}, 3000);
+			}
+		}
+	}
 }
