@@ -52,6 +52,11 @@
 @import 'pace.scss';
 
 /*
+  Import _animations sass file. (If new animations need to be imported, add inside _animations.scss)
+*/
+@import '_animations.scss';
+
+/*
   Include all the module related SCSS files
 */
 

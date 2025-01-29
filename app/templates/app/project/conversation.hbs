@@ -1,4 +1,4 @@
-<section class="content">
+<section class="content" {{did-insert this.scrollToConversation}}>
   <div class="conversations">
 
     <div class="row">
@@ -30,7 +30,7 @@
 
           {{#each this.model as |entity|}}
 
-            <div class="masonry-item">
+            <div class="masonry-item" id={{entity.id}}>
 
 
               <div class="box box-widget">
